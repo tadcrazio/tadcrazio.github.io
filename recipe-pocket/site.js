@@ -3,8 +3,9 @@
 Device / app version: ${device||'Not provided'}
 
 Sent from the Recipe Pocket feedback page.`;const url='mailto:recipepocket@duck.com?subject='+encodeURIComponent('Recipe Pocket — '+type)+'&body='+encodeURIComponent(body);window.location.href=url;document.querySelector('#feedback-status').textContent='Your email draft is ready to open. Please review and send it in your email app. If it does not open, email recipepocket@duck.com directly. This website has not sent your feedback.'});if(form)form.elements.message.addEventListener('input',()=>form.elements.message.setCustomValidity(''));})();
-// Keep support/privacy views reached from restricted Apple storefronts free of payment promotions.
-if(new URLSearchParams(location.search).get('app')==='ios'){
+// Keep app-store support/privacy views free of payment promotions.
+const storeContext=new URLSearchParams(location.search).get('app');
+if(['ios','play'].includes(storeContext)){
  document.documentElement.classList.add('apple-app');
- for(const link of document.querySelectorAll('a[href]')){const url=new URL(link.getAttribute('href'),location.href);if(url.origin===location.origin&&url.pathname.startsWith('/recipe-pocket/')){url.searchParams.set('app','ios');link.href=url.href}}
+ for(const link of document.querySelectorAll('a[href]')){const url=new URL(link.getAttribute('href'),location.href);if(url.origin===location.origin&&url.pathname.startsWith('/recipe-pocket/')){url.searchParams.set('app',storeContext);link.href=url.href}}
 }
